@@ -14,6 +14,10 @@ out "Project name: $PROJECT_NAME"
 ENV_TYPE=$(ask "Environment (dev/staging/prod):" --default "dev")
 out "Environment: $ENV_TYPE"
 
+# Generate random port if needed
+RANDOM_PORT=$(randomize 8000 8999)
+out "Generated random port: $RANDOM_PORT" 4
+
 # Check if setup should continue
 confirm "Setup project '$PROJECT_NAME' in '$ENV_TYPE' environment?" || {
   out "Setup cancelled" 3
@@ -24,14 +28,19 @@ confirm "Setup project '$PROJECT_NAME' in '$ENV_TYPE' environment?" || {
 out "Creating project structure..."
 touchup "$PROJECT_NAME/src/" "$PROJECT_NAME/lib/" "$PROJECT_NAME/config/" "$PROJECT_NAME/logs/"
 
-# Create config file
+# Truncate old config if exists
 CONFIG_FILE="$PROJECT_NAME/config/$ENV_TYPE.json"
+if [ -f "$CONFIG_FILE" ]; then
+  truncate "$CONFIG_FILE" --backup
+fi
+
 touchup "$CONFIG_FILE"
 cat > "$CONFIG_FILE" <<EOF
 {
   "name": "$PROJECT_NAME",
   "environment": "$ENV_TYPE",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "port": $RANDOM_PORT
 }
 EOF
 

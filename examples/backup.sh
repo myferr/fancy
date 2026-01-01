@@ -4,7 +4,8 @@
 
 set -e
 
-BACKUP_DIR="backups/$(date +%Y%m%d_%H%M%S)"
+BACKUP_ID=$(randomize 10000 99999)
+BACKUP_DIR="backups/$(date +%Y%m%d_%H%M%S)_$BACKUP_ID"
 SOURCE_DIR="data"
 
 out "Starting backup process..."
@@ -55,6 +56,10 @@ if [ -f "$BACKUP_DIR/source_checksums.txt" ] && [ -f "$BACKUP_DIR/backup_checksu
     exit 1
   fi
 fi
+
+# Truncate old backup logs
+out "Cleaning old backup logs..."
+truncate "backups/backup.log" --backup 2>/dev/null || true
 
 out "Backup completed: $BACKUP_DIR" 1
 

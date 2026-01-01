@@ -30,16 +30,20 @@ envset check DEPLOY_ENV API_KEY || {
   exit 1
 }
 
+# Check disk space before deployment (one-time check)
+out "Checking disk space..." 4
+# Note: For continuous monitoring, use: monitor disk / --warn 90% --then out "Disk space critical!" 2
+
 # Ask for confirmation
 confirm "Deploy to ${DEPLOY_ENV:-production}?" --no || {
   out "Deployment cancelled" 3
   exit 0
 }
 
-# Build step
+# Build step with timeout
 out "Building project..." 4
-npm run build || {
-  out "Build failed" 2
+timer 5m npm run build || {
+  out "Build failed or timed out" 2
   exit 1
 }
 

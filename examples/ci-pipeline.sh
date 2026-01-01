@@ -30,13 +30,18 @@ manifest src/main.cr lib/ spec/ README.md || {
 # Stage 4: Clean and prepare
 out "Stage 4: Clean workspace"
 clean "bin/" "*.dwarf" "*.o"
-touchup "bin/" "artifacts/"
+truncate "logs/ci.log" --backup 2>/dev/null || true
+touchup "bin/" "artifacts/" "logs/"
 
-# Stage 5: Build
+# Stage 5: Build (with timeout)
 out "Stage 5: Build"
 out "Building project..." 4
-crystal build src/main.cr -o bin/app || {
-  out "Build failed" 2
+# Note: For continuous disk monitoring during build, run in separate terminal:
+# monitor disk / --warn 85% --then out "Disk space low during build!" 3
+
+# Build with timeout
+timer 10m crystal build src/main.cr -o bin/app || {
+  out "Build failed or timed out" 2
   exit 1
 }
 
@@ -56,7 +61,10 @@ eq EXPR "[ -d 'spec' ]" THEN crystal spec || {
 # Stage 8: Compute checksums
 out "Stage 8: Computing checksums"
 hashit --algorithm sha256 bin/app > artifacts/checksum.txt
+BUILD_NUMBER=$(randomize 1000 9999)
+echo "BUILD_NUMBER=$BUILD_NUMBER" >> artifacts/build_info.txt
 out "Checksum: $(cat artifacts/checksum.txt)" 4
+out "Build number: $BUILD_NUMBER" 4
 
 # Stage 9: Dump build info
 out "Stage 9: Build information"

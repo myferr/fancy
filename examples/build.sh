@@ -27,6 +27,11 @@ check --binary crystal --binary npm || {
 out "Cleaning previous builds..."
 clean "$BUILD_DIR/" "$DIST_DIR/" "*.o" "*.dwarf"
 
+# Truncate log files before build
+out "Clearing old log files..."
+truncate "$BUILD_DIR/build.log" --backup 2>/dev/null || true
+truncate "$DIST_DIR/deploy.log" --backup 2>/dev/null || true
+
 # Ensure build directories exist
 touchup "$BUILD_DIR/" "$DIST_DIR/"
 
@@ -56,5 +61,7 @@ manifest "$BUILD_DIR/$PROJECT_NAME" || {
   exit 1
 }
 
-out "Build completed successfully!" 1
+# Generate random build ID
+BUILD_ID=$(randomize 1000 9999)
+out "Build completed successfully! Build ID: $BUILD_ID" 1
 

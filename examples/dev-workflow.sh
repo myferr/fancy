@@ -14,7 +14,7 @@ check --binary git --binary crystal --env HOME || {
 }
 
 # Ask what to do
-ACTION=$(ask "What would you like to do? (watch/test/build/clean):" --default "watch")
+ACTION=$(ask "What would you like to do? (watch/test/build/clean/monitor):" --default "watch")
 
 case "$ACTION" in
   watch)
@@ -45,7 +45,20 @@ case "$ACTION" in
       exit 0
     }
     clean "bin/" "*.dwarf" "*.o" ".crystal/"
+    truncate "logs/dev.log" --backup 2>/dev/null || true
     out "Clean complete!" 1
+    ;;
+  monitor)
+    out "Starting resource monitor..."
+    RESOURCE=$(ask "Monitor what? (disk/cpu):" --default "disk")
+    if [ "$RESOURCE" = "disk" ]; then
+      monitor disk / --warn 80% --then out "Disk space warning!" 3
+    elif [ "$RESOURCE" = "cpu" ]; then
+      monitor cpu / --warn 90% --then out "CPU usage high!" 3
+    else
+      out "Unknown resource: $RESOURCE" 2
+      exit 1
+    fi
     ;;
   *)
     out "Unknown action: $ACTION" 2

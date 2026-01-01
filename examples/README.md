@@ -11,6 +11,8 @@ A deployment script that:
 - Verifies project files with manifest
 - Checks environment variables
 - Uses interactive confirmation
+- Uses `timer` for build timeout
+- Mentions `monitor` for disk space checking
 - Provides status output
 
 **Usage:**
@@ -23,8 +25,10 @@ A build script that:
 - Validates project structure
 - Checks for required build tools
 - Cleans previous builds
+- Uses `truncate` to clear old log files (with backup)
 - Conditionally installs dependencies
 - Builds and verifies output
+- Uses `randomize` to generate build IDs
 
 **Usage:**
 ```bash
@@ -35,6 +39,8 @@ A build script that:
 An interactive project setup script that:
 - Prompts for project name and environment
 - Creates project structure
+- Uses `randomize` to generate random port numbers
+- Uses `truncate` to clean old config files (with backup)
 - Generates configuration files
 - Sets environment variables
 - Verifies setup completion
@@ -46,11 +52,13 @@ An interactive project setup script that:
 
 ### `backup.sh`
 A backup script with verification that:
+- Uses `randomize` to generate unique backup IDs
 - Creates timestamped backup directories
 - Verifies source files exist
 - Computes checksums for verification
 - Copies files safely
 - Verifies backup integrity
+- Uses `truncate` to clean old backup logs
 
 **Usage:**
 ```bash
@@ -60,10 +68,12 @@ A backup script with verification that:
 ### `dev-workflow.sh`
 A development workflow helper that:
 - Checks development environment
-- Provides interactive menu (watch/test/build/clean)
+- Provides interactive menu (watch/test/build/clean/monitor)
 - Watches files for changes
+- Uses `monitor` to monitor disk/CPU during development
 - Runs builds and tests
 - Cleans artifacts
+- Uses `truncate` to clean log files
 
 **Usage:**
 ```bash
@@ -74,10 +84,14 @@ A development workflow helper that:
 A comprehensive CI/CD pipeline script that:
 - Validates environment and structure
 - Cleans and prepares workspace
+- Uses `truncate` to clear CI logs (with backup)
+- Uses `timer` for build timeout
 - Builds project
 - Runs tests conditionally
+- Uses `randomize` to generate build numbers
 - Computes checksums
 - Dumps build information
+- Mentions `monitor` for continuous disk monitoring
 
 **Usage:**
 ```bash
@@ -104,12 +118,23 @@ Before running these examples:
 
 3. **Adjust paths** in the scripts if your binaries are in a different location.
 
+## Featured Binaries in Examples
+
+These examples demonstrate the following Fancy binaries:
+
+- **Core utilities**: `check`, `ensure`, `manifest`, `guard`, `envset`, `confirm`, `ask`
+- **File operations**: `touchup`, `clean`, `copycat`, `truncate`
+- **Output & monitoring**: `out`, `watch`, `monitor`, `dump`
+- **Logic & flow**: `eq`, `timer`
+- **Data generation**: `randomize`, `hashit`
+
 ## Notes
 
-- These examples assume the binaries are in `./binaries/<name>/<name>`
+- These examples assume the binaries are installed and available in your PATH
 - Some examples use placeholder commands (like `npm`, `crystal`) - adjust to your needs
 - The scripts use `set -e` to exit on errors
 - Interactive examples may require terminal input
+- `monitor` runs continuously - use Ctrl+C to stop it
 
 ## Customization
 
