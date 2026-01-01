@@ -38,7 +38,11 @@ Originally, **Fancy** was intended to be written in Ruby, but Ruby had cross-pla
 | **guard**    | Validate folder structure                                  | `guard path <path1> [path2] ...` or `guard structure <base> <path1> [path2] ...` | `guard path src/ lib/`                              |
 | **hashit**   | Compute checksums / hashes for files                       | `hashit [--algorithm sha256\|md5] <file1> [file2] ...`                           | `hashit --md5 file.txt`                             |
 | **manifest** | Verify a list of files exist                               | `manifest <file1> [file2] [file3] ...`                                           | `manifest index.html style.css script.js`           |
+| **monitor**  | Continuously check resources and trigger actions            | `monitor <disk\|cpu\|process\|file> <target> [--warn <threshold>] [--then <command>]` | `monitor disk / --warn 80% --then out "Disk almost full"` |
 | **out**      | Output messages with status codes                          | `out <message> [code]`                                                           | `out "Success!" 1`                                  |
+| **randomize**| Generate random numbers, strings, or pick random lines      | `randomize <min> <max>` or `randomize --file <path>` or `randomize --string <len>` | `randomize 1 100` or `randomize --file names.txt`   |
+| **timer**    | Run a command after a delay or at intervals                | `timer <duration> <command> [args...]` or `timer --interval <duration> <command>` | `timer 10s echo "Time's up!"`                        |
+| **truncate** | Truncate files safely, optionally create backup            | `truncate <file> [--backup]`                                                      | `truncate logs/app.log --backup`                     |
 | **touchup**  | Create missing files or directories                        | `touchup <path1> [path2] [path3] ...`                                            | `touchup logs/app.log src/utils/`                   |
 | **watch**    | Watch files/folders and run a command on change            | `watch <path> <command> [args...]`                                               | `watch src/ 'echo changed'`                         |
 
