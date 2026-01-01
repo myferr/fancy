@@ -9,3 +9,7 @@ commit binary:
   git add binaries/{{binary}}
   git commit -m "feat: add '{{binary}}' binary"
   git push
+
+clean:
+  find binaries -mindepth 2 -type f ! -name 'source.cr' -exec rm -f {} +
+  rm -rf binaries/*/*.dwarf
