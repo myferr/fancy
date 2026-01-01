@@ -63,13 +63,13 @@ Originally, **Fancy** was intended to be written in Ruby, but Ruby had cross-pla
 Install all Fancy binaries to your system with one command:
 
 ```bash
-curl -fsSL https://github.com/myferr/fancy/blob/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/myferr/fancy/refs/heads/main/install.sh | bash
 ```
 
 Or using wget:
 
 ```bash
-wget -qO- https://github.com/myferr/fancy/blob/main/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/myferr/fancy/refs/heads/main/install.sh | bash
 ```
 
 ### Custom Installation Directory
@@ -77,7 +77,7 @@ wget -qO- https://github.com/myferr/fancy/blob/main/install.sh | bash
 To install to a custom directory:
 
 ```bash
-INSTALL_DIR=~/bin curl -fsSL https://github.com/myferr/fancy/blob/main/install.sh | bash
+INSTALL_DIR=~/bin curl -fsSL https://raw.githubusercontent.com/myferr/fancy/refs/heads/main/install.sh | bash
 ```
 
 ### Manual Installation
