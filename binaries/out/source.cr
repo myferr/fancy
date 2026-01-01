@@ -1,4 +1,4 @@
-def hello_world(output, code = nil)
+def hello_world(output : String, code : String? = nil)
   case code
   when nil, ""
     puts output
@@ -18,4 +18,4 @@ def hello_world(output, code = nil)
   end
 end
 
-hello_world(ARGV[0], ARGV[1])
+hello_world(ARGV[0]? || "", ARGV[1]?)
