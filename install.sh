@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 INSTALL_DIR="${INSTALL_DIR:-/usr/local/bin}"
-REPO_URL="https://github.com/MyferIsADev/fancy.git"
+REPO_URL="https://github.com/myferr/fancy.git"
 TEMP_DIR="${TEMP_DIR:-/tmp/fancy-install}"
 
 # Function to print colored output
